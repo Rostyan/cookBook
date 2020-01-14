@@ -1,44 +1,42 @@
 import React, { useState, useEffect } from 'react'
 
-import productService from './service';
+import listsService from './service';
 
 export default function Home() {
-  const [lists, setLists] = useState(null);
+  const [recipes, setproducts] = useState(null);
 
   useEffect(() => {
-    if(!lists) {
+    if(!recipes) {
       getList();
     }
   })
  
 
   const getList = async () => {
-    let res = await productService.getAll();
+    let res = await listsService.getAll();
     console.log(res);
     setproducts(res);
   }
 
-  const renderData = lists => {
+  const renderData = recipes => {
     return (
-      <li key={lists._id} className="list__item product">
-        <h3 className="product__name">{lists.name}</h3>
-        <p className="product__description">{lists.description}</p>
+      <li key={recipes._id} className="list__item product">
+        <h3 className="product__name">{recipes.name}</h3>
+        <p className="product__description">{recipes.description}</p>
       </li>
     );
   };
 
-    console.log('list', lists)
     return (
       <div>
 
         <ul className="list">
-          {(lists && lists.length > 0) ? (
-            lists.map(list => renderData(list))
+          {(recipes && recipes.length > 0) ? (
+            recipes.map(recipe => renderData(recipe))
           ) : (
-              <p>No products found</p>
+              <p>No recipes found</p>
             )}
         </ul>
       </div>
     )
   }
-

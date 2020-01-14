@@ -7,5 +7,4 @@ module.exports.delete = function (req,res) {
   Reciepes.remove({_id: id})
     .then(() => res.redirect('/'))
     .catch(err => res.send(err));
-
 };

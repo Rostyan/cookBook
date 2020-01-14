@@ -2,7 +2,7 @@ const Reciepes = require('../model/recipes');
 
 module.exports.get = (req, res) => {
 
-  Reciepes.find((error, data) => {
+  Reciepes.find((error, products) => {
     if (error) {
       return next(error)
     } else {
