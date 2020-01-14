@@ -15,11 +15,13 @@ const reciepes = new Schema({
     trim: true
   },
 
-  dateCreated: {
+  datecreated: {
      type: Date, 
      default: Date.now 
   }
 
+},{
+  collection: 'Recipes'
 });
 
 module.exports = mongoose.model('reciepes', reciepes);

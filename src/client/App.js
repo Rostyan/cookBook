@@ -1,17 +1,41 @@
 import React, { Component } from 'react';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch
+} from 'react-router-dom';
+
+
+import Home from './components/home';
+import CreateRecipes from './components/createRecipes'
+
 
 class App extends Component {
+
+
+
   render() {
+
+    
     return (
-      <div className="App">
-        <div className="App-header">
-          <h2>Welcome to React</h2>
+      <Router>
+        <div className="App">
+
+         
+
+          <div className="container"></div>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/createRecipes' component={CreateRecipes} />
+
+            <Route render={() => (<div className="error404">
+              <h1>Error 404</h1>
+              <h2>Page not found!</h2>
+            </div>)} />
+          </Switch>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      </Router>
     );
   }
 }

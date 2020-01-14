@@ -5,7 +5,7 @@ module.exports.patch = function (req, res) {
   let updatedOptions = {
     name: req.body.name,
     description: req.body.description,
-    dateCreated: req.body.dateCreated
+    datecreated: req.body.datecreated
   };
 
   Reciepes.findOneAndUpdate({ _id: req.params.id }, { $set: updatedOptions }, function (error) {

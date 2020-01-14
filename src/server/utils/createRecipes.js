@@ -4,8 +4,8 @@ module.exports.post = (req, res) => {
   Reciepes.create({
     name: req.body.name,
     description: req.body.description,
-    dateCreated: req.body.dateCreated
+    datecreated: req.body.datecreated
   })
-    .then(user => res.send('Рецепт успішно доданий до бази даних!'))
+    .then(() => res.redirect('back'))
     .catch(err => res.send(err));
 }
