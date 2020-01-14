@@ -6,11 +6,11 @@ export default function Home() {
   const [recipes, setproducts] = useState(null);
 
   useEffect(() => {
-    if(!recipes) {
+    if (!recipes) {
       getList();
     }
   })
- 
+
 
   const getList = async () => {
     let res = await listsService.getAll();
@@ -20,23 +20,43 @@ export default function Home() {
 
   const renderData = recipes => {
     return (
-      <li key={recipes._id} className="list__item product">
-        <h3 className="product__name">{recipes.name}</h3>
-        <p className="product__description">{recipes.description}</p>
-      </li>
+      <tr>
+        <th scope="col">{recipes.name}</th>
+        <th scope="col">{recipes.description}</th>
+        <th scope="col">{recipes.datecreated}</th>
+        <th> </th>
+      </tr>
+
+
+      // <li key={recipes._id} className="list__item product">
+      //   <h3 className="product__name">{recipes.name}</h3>
+      //   <p className="product__description">{recipes.description}</p>
+      //   <p className="product__description">{recipes.datecreated}</p>
+
+      // </li>
     );
   };
 
-    return (
-      <div>
+  return (
+    <div>
 
-        <ul className="list">
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">Name of recipes</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date of created</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
           {(recipes && recipes.length > 0) ? (
             recipes.map(recipe => renderData(recipe))
           ) : (
               <p>No recipes found</p>
             )}
-        </ul>
-      </div>
-    )
-  }
+        </tbody>
+      </table>
+    </div>
+  )
+}
