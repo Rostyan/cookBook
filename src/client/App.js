@@ -2,28 +2,23 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Switch
 } from 'react-router-dom';
 
 
 import Home from './components/home';
 import CreateRecipes from './components/createRecipes'
+import Aside from './components/aside'
 
 
 class App extends Component {
 
-
-
   render() {
-
-    
     return (
       <Router>
         <div className="App">
 
-         
-
+          <Aside />
           <div className="container"></div>
           <Switch>
             <Route exact path='/' component={Home} />

@@ -1,19 +1,21 @@
 const Reciepes = require('../model/recipes');
 
-module.exports.patch = function (req, res) {
+module.exports.post = function (req, res) {
 
-  let updatedOptions = {
-    name: req.body.name,
-    description: req.body.description,
-    datecreated: req.body.datecreated
-  };
 
-  Reciepes.findOneAndUpdate({ _id: req.params.id }, { $set: updatedOptions }, function (error) {
-    if (error) {
-      res.send(error);
-    } else {
-      res.redirect('back')
-    }
+    Reciepes.findOneAndUpdate({_id : req.params.id},req.body,{runValidators: true},(err,response)=>{
+      if(err)
+          res.status(500).json({message:{
+              msgBody : "Unable to Update Employee",
+              msgError : true
+          }});
+      else
+      res.status(200).json({message:{
+          msgBody: "Successfully Updated Employee",
+          msgError : false
+      }});   
   });
+
+
 
 };
