@@ -32,6 +32,10 @@ If you want run on two terminal, or see how work only server or client side.
 
 Run to webpack production mode.
 
+### npm test
+
+Run to test program.
+
 ### Mongo setup
 
 To find database data:

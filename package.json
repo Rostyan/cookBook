@@ -8,7 +8,8 @@
     "start": "npm run build && node ./src/server/app.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon ./src/server/app.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "react-scripts test"
   },
   "dependencies": {
     "axios": "^0.19.1",
