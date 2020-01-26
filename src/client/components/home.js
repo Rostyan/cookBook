@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import axios from 'axios';
-
-import UpdateRecipes from './updateRecipes'
+import Table from 'react-bootstrap/Table';
+import RecipesTable from './table';
 
 export default class Home extends Component {
   constructor() {
@@ -11,7 +11,7 @@ export default class Home extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     axios.get('/api/')
       .then(res => {
         this.setState({
@@ -23,35 +23,27 @@ export default class Home extends Component {
       })
   }
 
-  render() {
-    const recipes = this.state.recipes
-    return (
-      <div>
+  DataTable() {
+    return this.state.recipes.map((res, i) => {
+      return <RecipesTable obj={res} key={i} />;
+    });
+  }
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Name of recipes</th>
-              <th scope="col">Description</th>
-              <th scope="col">Date of created</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              recipes.map((recipe, index) => {
-              return (
-                <UpdateRecipes 
-                  key={index}
-                  {...recipe}
-                  onDelete={this.onDelete}
-                  onEditSubmit={this.onEditSubmit}
-                />
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-    )
+  render() {
+    return (<div className="table-wrapper">
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Date Of Created</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.DataTable()}
+        </tbody>
+      </Table>
+    </div>);
   }
 }

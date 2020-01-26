@@ -1,99 +1,85 @@
 import React, { Component } from 'react';
-import   {BrowserRouter as Router} from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 export default class UpdateRecipes extends Component {
   constructor(props) {
     super(props);
 
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+
     this.state = {
       name: '',
       description: '',
       datecreated: ''
     };
-    this.onEdit = this.onEdit.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.deleteRecipe = this.deleteRecipe.bind(this);
-  }
-
-  deleteRecipe() {
-    axios.delete('/api/delete/' + this.props._id)
-      .then((res) => {
-        console.log('Student successfully deleted!')
-      }).catch((error) => {
-        console.log(error)
-      })
-  }
-
-
-  onEdit() {
-    if (this.state.isEdit) {
-      this.setState({ isEdit: false });
-    } else {
-      this.setState({ isEdit: true });
-    }
-
-  }
-
-  onSubmit(e) {
-    e.preventDefault()
     
+  }
 
-    this.setState({ isEdit: false });
+  // componentDidMount() {
+  //   axios.get('/api/update/' + this.props.match.params.id)
+  //     .then(res => {
+  //       this.setState({
+  //         name: res.data.name,
+  //         description: res.data.description,
+  //         datecreated: res.data.datecreated
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // }
 
-    const recipeObject = {
+  onChangeName(e) {
+    this.setState({ name: e.target.value })
+  }
+
+  onChangeDescription(e) {
+    this.setState({ description: e.target.value })
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+
+    const updateObject = {
       name: this.state.name,
       description: this.state.description,
-      datecreated: this.state.datecreated
     };
 
-    axios.put('/api/update/' + this.props.id, recipeObject)
+      axios.put('/api/update/' + this.props.match.params.id, updateObject)
       .then((res) => {
         console.log(res.data)
-        console.log('Recipe successfully updated')
+        console.log('Recipes successfully updated')
       }).catch((error) => {
         console.log(error)
       })
+
+      // Redirect to Recipes List 
+      this.props.history.push('/recipes-list')
   }
 
-  render() {
-    const { name, description, datecreated } = this.props;
 
-    return (
-      <Router>
-        {
-          this.state.isEdit
-            ? (
-              <tr>
-                <td>
-                  <form action='/api/patch?_method=PATCH' method='POST' onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                      <span>Name</span>
-                      <input placeholder="Name" name="name" className="form-control" ref={name => this.name = name} defaultValue={name} required />
-                      <span>Description</span>
-                      <textarea placeholder="description" name="description" className="form-control" ref={description => this.description = description} defaultValue={description} required />
-                      <span>Data of created</span>
-                      <input type="datecreated" name="datecreated" placeholder="datecreated Email" className="form-control" ref={datecreated => this.datecreated = datecreated} defaultValue={datecreated} required />
-                      <br></br>
-                      <input type="submit"
-                        className="btn btn-block btn-primary " value="Save" />
-                    </div>
-                  </form>
-                  <button className="btn btn-block btn-danger" onClick={this.onEdit}>Cancel</button>
-                </td>
-              </tr>
-            )
-            : (
-              <tr>
-                <td>{name}</td>
-                <td>{description}</td>
-                <td>{datecreated}</td>
-                <td><button type="button" className="btn btn-primary" onClick={this.onEdit}>Edit</button></td>
-                <td><button type="button" className="btn btn-danger" onClick={this.deleteRecipe}>Delete</button></td>
-              </tr>
-            )
-        }
-      </Router>
-    )
+  render() {
+    return (<div className="form-wrapper">
+      <Form onSubmit={this.onSubmit}>
+        <Form.Group controlId="Name">
+          <Form.Label>Recipes</Form.Label>
+          <Form.Control type="text" value={this.state.name} onChange={this.onChangeName} />
+        </Form.Group>
+
+        <Form.Group controlId="Email">
+          <Form.Label>Description</Form.Label>
+          <Form.Control type="text" value={this.state.description} onChange={this.onChangeDescription} />
+        </Form.Group>
+
+        <Button variant="danger" size="lg" block="block" type="submit">
+          Update Recipe
+        </Button>
+      </Form>
+    </div>);
   }
 }

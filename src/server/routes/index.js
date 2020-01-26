@@ -9,9 +9,9 @@ const deleteRecipes = require('../utils/deleteRecipes')
 
 router.get('/', showRecipes.get);
 
-router.post('/createRecipes', createRecipes.post);
+router.post('/create-recipes', createRecipes.post);
 
-router.post('/update/:id',editRecipes.post);
+router.put('/update/:id',editRecipes.put);
 
 router.delete("/delete/:id", deleteRecipes.delete);
 

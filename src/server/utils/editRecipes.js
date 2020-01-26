@@ -1,21 +1,18 @@
 const Reciepes = require('../model/recipes');
 
-module.exports.post = function (req, res) {
+module.exports.put = function (req, res) {
 
 
-    Reciepes.findOneAndUpdate({_id : req.params.id},req.body,{runValidators: true},(err,response)=>{
-      if(err)
-          res.status(500).json({message:{
-              msgBody : "Unable to Update Employee",
-              msgError : true
-          }});
-      else
-      res.status(200).json({message:{
-          msgBody: "Successfully Updated Employee",
-          msgError : false
-      }});   
-  });
+  console.log('body ', req.body);
 
-
+  Reciepes.findByIdAndUpdate(req.params.id, {
+    $set: req.body
+  }, (error) => {
+    if(error){
+      res.send(error);
+    } else {
+      res.redirect('back')
+    }
+  })
 
 };

@@ -1,11 +1,12 @@
 const Reciepes = require('../model/recipes');
 
 module.exports.post = (req, res) => {
-  Reciepes.create({
-    name: req.body.name,
-    description: req.body.description,
-    datecreated: req.body.datecreated
+  Reciepes.create(req.body, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      console.log(data)
+      res.json(data)
+    }
   })
-    .then(() => res.redirect('back'))
-    .catch(err => res.send(err));
 }
